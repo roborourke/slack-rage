@@ -51,8 +51,6 @@ $app->post( '/', function ( \Silex\Application $app ) {
 	// check for slack data
 	$token = $app['request']->get( 'token' );
 
-	var_dump( $token );
-
 	if ( $token && isset( $app['webhooks'][ $token ] ) ) {
 
 		// check if user chat or channel
