@@ -39,12 +39,12 @@ $app['fetch_rage'] = function ( \Silex\Application $app ) {
 	$app->abort( 200, 'Failed to fetch anything from the API' );
 };
 
-$app->get( '/search', function ( \Silex\Application $app ) {
+$app->get( '/', function ( \Silex\Application $app ) {
 	$img = $app['fetch_rage'];
 	return sprintf( '<img src="%s" alt="%s" />', $app->escape( $img->png ), $app->escape( $img->title ) );
 } );
 
-$app->post( '/search', function ( \Silex\Application $app ) {
+$app->post( '/', function ( \Silex\Application $app ) {
 
 	$img = $app['fetch_rage'];
 
