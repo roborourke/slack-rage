@@ -54,10 +54,12 @@ $app->post( '/', function ( \Silex\Application $app ) {
 	if ( $token && isset( $app['webhooks'][ $token ] ) ) {
 
 		// check if user chat or channel
-		$prefix = strpos( $app['request']->get( 'channel_name' ), 'directmessage' ) === 0 ? '' : '#';
+		$channel = $app['request']->get( 'channel_name' ) === 'directmessage' ?
+			$app['request']->get( 'channel_id' ) :
+			'#' . $app['request']->get( 'channel_name' );
 
 		$payload = json_encode( array(
-			'channel'     => $prefix . $app['request']->get( 'channel_name' ),
+			'channel'     => $channel,
 			'username'    => 'RAGE',
 			'icon_url'    => 'http://cdn.alltheragefaces.com/img/faces/png/troll-troll-face.png',
 			'attachments' => array(
