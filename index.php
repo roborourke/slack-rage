@@ -54,7 +54,7 @@ $app->post( '/', function ( \Silex\Application $app ) {
 	if ( $token && isset( $app['webhooks'][ $token ] ) ) {
 
 		// check if user chat or channel
-		$prefix = strpos( $app['request']->get( 'channel_id' ), 'C' ) === 0 ? '#' : '@';
+		$prefix = strpos( $app['request']->get( 'channel_name' ), 'directmessage' ) === 0 ? '' : '#';
 
 		$payload = json_encode( array(
 			'channel'     => $prefix . $app['request']->get( 'channel_name' ),
