@@ -15,10 +15,10 @@ if ( file_exists( __DIR__ . '/config.php' ) ) {
 $app = new \Silex\Application();
 
 // slack hooks
-$app['webhooks'] = array(
-	'hmn'           => 'https://hooks.slack.com/services/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',
-	'screeningfilm' => 'https://hooks.slack.com/services/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'
-);
+// 1. copy the sample config file to config.php
+// 2. change the sample array so that your slash command token is the key and you incoming webhook is the value
+// 3. add as many as you like
+$app['webhooks'] = isset( $webhooks ) ? $webhooks : array();
 
 // add fetch service
 $app['fetch_rage'] = function ( \Silex\Application $app ) {
@@ -49,9 +49,9 @@ $app->post( '/search', function ( \Silex\Application $app ) {
 	$img = $app['fetch_rage'];
 
 	// check for slack data
-	$team_domain = $app['request']->get( 'team_domain' );
+	$token = $app['request']->get( 'token' );
 
-	if ( $team_domain && isset( $app['webhooks'][ $team_domain ] ) ) {
+	if ( $token && isset( $app['webhooks'][ $token ] ) ) {
 
 		// check if user chat or channel
 		$prefix = strpos( $app['request']->get( 'channel_id' ), 'C' ) === 0 ? '#' : '@';
