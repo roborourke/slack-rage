@@ -18,7 +18,7 @@ $app = new \Silex\Application();
 // 1. copy the sample config file to config.php
 // 2. change the sample array so that your slash command token is the key and you incoming webhook is the value
 // 3. add as many as you like
-$app['webhooks'] = isset( $webhooks ) ? $webhooks : array();
+$app['webhooks'] = isset( $webhooks ) ? $webhooks : [ ];
 
 // add fetch service
 $app['fetch_rage'] = function ( \Silex\Application $app ) {
@@ -58,23 +58,21 @@ $app->post( '/', function ( \Silex\Application $app ) {
 			$app['request']->get( 'channel_id' ) :
 			'#' . $app['request']->get( 'channel_name' );
 
-		$payload = json_encode( array(
+		$payload = json_encode( [
 			'channel'     => $channel,
 			'username'    => 'RAGE',
 			'icon_url'    => 'http://cdn.alltheragefaces.com/img/faces/png/troll-troll-face.png',
-			'attachments' => array(
-				array(
+			'attachments' => [
+				[
 					'title'     => $img->title,
 					'fallback'  => $img->title,
 					'image_url' => $img->png,
-				)
-			)
-		) );
+				]
+			]
+		] );
 
 		$client  = new \GuzzleHttp\Client();
-		$promise = $client->postAsync( $app['webhooks'][ $token ], array(
-			'body' => $payload
-		) );
+		$promise = $client->postAsync( $app['webhooks'][ $token ], [ 'body' => $payload ] );
 		$promise->wait();
 
 		return '';
