@@ -51,6 +51,8 @@ $app->post( '/', function ( \Silex\Application $app ) {
 	// check for slack data
 	$token = $app['request']->get( 'token' );
 
+	var_dump( $token );
+
 	if ( $token && isset( $app['webhooks'][ $token ] ) ) {
 
 		// check if user chat or channel
@@ -70,7 +72,7 @@ $app->post( '/', function ( \Silex\Application $app ) {
 		) );
 
 		$client  = new \GuzzleHttp\Client();
-		$promise = $client->postAsync( $app['webhooks'][ $team_domain ], array(
+		$promise = $client->postAsync( $app['webhooks'][ $token ], array(
 			'body' => $payload
 		) );
 		$promise->wait();
