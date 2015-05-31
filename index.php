@@ -75,6 +75,7 @@ $app->post( '/', function ( \Silex\Application $app ) {
 		) );
 		$promise->wait();
 
+		return '';
 	}
 
 	return sprintf( '<img src="%s" alt="%s" />', $app->escape( $img->png ), $app->escape( $img->title ) );;
