@@ -61,6 +61,7 @@ $app->post( '/', function ( \Silex\Application $app ) {
 			'#' . $app['request']->get( 'channel_name' );
 
 		$payload = json_encode( [
+			'text'        => '/rage ' . $app['request']->get( 'text' ),
 			'channel'     => $channel,
 			'username'    => $app['request']->get( 'user_name' ),
 			'icon_url'    => 'http://cdn.alltheragefaces.com/img/faces/png/troll-troll-face.png',
