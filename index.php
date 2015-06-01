@@ -31,12 +31,12 @@ $app['fetch_rage'] = function ( \Silex\Application $app ) {
 	$res    = $client->get( 'http://alltheragefaces.com/api/search/' . $search );
 	$json   = json_decode( $res->getBody() );
 
-	if ( $json ) {
+	if ( $json && is_array( $json ) ) {
 		$img = $json[ array_rand( $json ) ];
 		return $img;
 	}
 
-	$app->abort( 200, 'Failed to fetch anything from the API' );
+	$app->abort( 200, 'Failed to fetch anything from the API :(' );
 };
 
 $app->get( '/', function ( \Silex\Application $app ) {
