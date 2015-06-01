@@ -24,11 +24,11 @@ $app['webhooks'] = isset( $webhooks ) ? $webhooks : [ ];
 $app['fetch_rage'] = function ( \Silex\Application $app ) {
 
 	$search = $app['request']->get( 'text' );
-	$search = str_replace( ' ', ',', $search );
+	$search = str_replace( ' ', '+', $search );
 
 	// fetch from alltherage
 	$client = new \GuzzleHttp\Client();
-	$res    = $client->get( 'http://alltheragefaces.com/api/search/' . rawurlencode( $search ) );
+	$res    = $client->get( 'http://alltheragefaces.com/api/search/' . $search );
 	$json   = json_decode( $res->getBody() );
 
 	if ( $json ) {
