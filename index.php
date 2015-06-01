@@ -5,6 +5,8 @@
 
 namespace RageApp;
 
+use Symfony\Component\HttpFoundation\Response;
+
 // get autoloader
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -79,6 +81,10 @@ $app->post( '/', function ( \Silex\Application $app ) {
 	}
 
 	return sprintf( '<img src="%s" alt="%s" />', $app->escape( $img->png ), $app->escape( $img->title ) );;
+} );
+
+$app->error( function ( \Exception $e, $code ) {
+	return new Response( $e->getMessage() );
 } );
 
 $app->run();
